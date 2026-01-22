@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Knights of Columbus – Knowledge Contest</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Knights of Columbus Knowledge Contest – online, auto-scored tests with teacher controls and downloadable results." />
+
+  <!--
+    Hosted Index Page (HTML5)
+    - Works on Diocese/State websites as a static file
+    - Uses RELATIVE links (safe for hosting in a subfolder)
+    - Edit the TESTS list below to match your filenames/paths
+
+    Recommended folder structure on your website:
+      /knowledge-tests/
+        index.html   (this file)
+        /tests/
+          Grade5_Math-v2.html
+          Grade6_Math-v2.html
+          ...
+  -->
+
+  <style>
+    :root{
+      --kc-blue:#003a70;
+      --kc-blue-2:#0b5aa1;
+      --kc-red:#a40016;
+      --card:#ffffff;
+      --bg:#f4f5fa;
+      --text:#111827;
+      --muted:#6b7280;
+      --border:#e5e7eb;
+      --radius:16px;
+      --shadow: 0 10px 24px rgba(0,0,0,.06);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      background:var(--bg);
+      color:var(--text);
+    }
+    .wrap{
+      max-width:980px;
+      margin:28px auto;
+      padding:0 16px 40px;
+    }
+    header{
+      background:linear-gradient(135deg,var(--kc-blue),var(--kc-blue-2));
+      color:#fff;
+      border-radius:var(--radius);
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+    header .top{
+      display:flex;
+      gap:16px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    h1{
+      margin:0;
+      font-size:22px;
+      letter-spacing:.2px;
+    }
+    header p{
+      margin:8px 0 0;
+      opacity:.95;
+      font-size:14px;
+      line-height:1.35;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.22);
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:18px;
+      margin-top:18px;
+    }
+    @media (max-width:900px){
+      .grid{grid-template-columns:1fr}
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+    .card h2{
+      margin:0 0 12px;
+      font-size:16px;
+      color:var(--kc-blue);
+    }
+    .card h3{
+      margin:18px 0 8px;
+      font-size:13px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.06em;
+    }
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      margin:4px 0 12px;
+    }
+    .search{
+      flex:1;
+      min-width:240px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    input[type="search"]{
+      width:100%;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      font-size:14px;
+      outline:none;
+    }
+    input[type="search"]:focus{
+      border-color:#c7d2fe;
+      box-shadow:0 0 0 3px rgba(99,102,241,.12);
+    }
+
+    .pillrow{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .pill{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:#fff;
+      font-size:13px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .pill[aria-pressed="true"]{
+      border-color:rgba(164,0,22,.35);
+      box-shadow:0 0 0 3px rgba(164,0,22,.10);
+      color:var(--kc-red);
+      font-weight:700;
+    }
+
+    ul{margin:0;padding-left:18px}
+    li{margin:7px 0}
+    a{
+      color:var(--kc-red);
+      text-decoration:none;
+      font-weight:700;
+    }
+    a:hover{text-decoration:underline}
+    .muted{color:var(--muted);font-size:13px;line-height:1.45}
+    .small{font-size:12px;color:var(--muted)}
+    .callout{
+      border-left:4px solid rgba(0,58,112,.55);
+      padding:10px 12px;
+      background:#f8fafc;
+      border-radius:12px;
+      margin:10px 0 0;
+    }
+    footer{
+      text-align:center;
+      margin-top:18px;
+      color:var(--muted);
+      font-size:12px;
+    }
+    .kicon{
+      width:34px;height:34px;border-radius:10px;
+      background:rgba(255,255,255,.16);
+      border:1px solid rgba(255,255,255,.24);
+      display:grid;place-items:center;
+      font-weight:800;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="top">
+        <div style="display:flex;gap:12px;align-items:center">
+          <div class="kicon" aria-hidden="true">KC</div>
+          <div>
+            <h1>Knights of Columbus – Knowledge Contest</h1>
+            <p>Online, auto-scored tests with teacher controls and downloadable results (static-host friendly).</p>
+          </div>
+        </div>
+        <div class="badge" title="This page uses relative links, safe for hosting in a subfolder.">
+          ✅ Hosted-ready • Relative links
+        </div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <main class="card" aria-label="Test index">
+        <div class="toolbar">
+          <div class="search">
+            <input id="q" type="search" placeholder="Search tests (e.g., Grade 5, Math, Spelling)..." autocomplete="off" />
+          </div>
+          <div class="pillrow" role="group" aria-label="Filter">
+            <button class="pill" data-filter="All" aria-pressed="true">All</button>
+            <button class="pill" data-filter="Math" aria-pressed="false">Math</button>
+            <button class="pill" data-filter="Spelling" aria-pressed="false">Spelling</button>
+          </div>
+        </div>
+
+        <div id="lists"></div>
+
+        <div class="callout">
+          <div class="muted">
+            Tip for web hosting: put your test files in a <b>/tests/</b> folder and keep this page as <b>index.html</b> in the parent folder.
+            If your Diocese/State site hosts this under a subfolder (like <b>/knowledge-tests/</b>), these links will still work.
+          </div>
+        </div>
+      </main>
+
+      <aside class="card" aria-label="Instructions">
+        <h2>Posting Instructions</h2>
+        <div class="muted">
+          <ol>
+            <li>Create a folder on your website (example: <b>/knowledge-tests/</b>).</li>
+            <li>Upload this file as <b>index.html</b> inside that folder.</li>
+            <li>Create a subfolder named <b>tests</b>.</li>
+            <li>Upload all test HTML files into <b>/knowledge-tests/tests/</b>.</li>
+            <li>Open: <span class="small">https://your-site.org/knowledge-tests/</span></li>
+          </ol>
+        </div>
+
+        <h3>Optional</h3>
+        <div class="muted">
+          <ul>
+            <li>Rename files freely — then update the <b>TESTS</b> list in this page.</li>
+            <li>Add PDFs/resources by adding another section to the list.</li>
+            <li>If your site uses a CMS, paste this into an “HTML block” page and keep the <b>tests</b> folder in the same directory.</li>
+          </ul>
+        </div>
+
+        <h3>Support Note</h3>
+        <div class="muted">
+          Each test should remain “offline-capable” (no external libraries required). If you later want
+          results emailed or saved centrally, that’s best handled via a server endpoint or Google Apps Script.
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      © Knights of Columbus • Knowledge Contest • Hosted Index (HTML) • Printable • Offline-capable tests
+    </footer>
+  </div>
+
+  <script>
+    // ==========================
+    // EDIT THESE AS NEEDED
+    // ==========================
+    const TESTS = [
+      { grade: 5, subject: "Math",     label: "Grade 5 Math",     href: "tests/Grade5_Math-v2.html" },
+      { grade: 6, subject: "Math",     label: "Grade 6 Math",     href: "tests/Grade6_Math-v2.html" },
+      { grade: 7, subject: "Math",     label: "Grade 7 Math",     href: "tests/Grade7_Math-v2.html" },
+      { grade: 8, subject: "Math",     label: "Grade 8 Math",     href: "tests/Grade8_Math-v2.html" },
+
+      { grade: 5, subject: "Spelling", label: "Grade 5 Spelling", href: "tests/Grade5_Spelling-v2.html" },
+      { grade: 6, subject: "Spelling", label: "Grade 6 Spelling", href: "tests/Grade6_Spelling-v2.html" },
+      { grade: 7, subject: "Spelling", label: "Grade 7 Spelling", href: "tests/Grade7_Spelling-v2.html" },
+      { grade: 8, subject: "Spelling", label: "Grade 8 Spelling", href: "tests/Grade8_Spelling-v2.html" },
+    ];
+
+    // ==========================
+    // RENDERING / FILTERING
+    // ==========================
+    const listsEl = document.getElementById("lists");
+    const qEl = document.getElementById("q");
+    const pillButtons = Array.from(document.querySelectorAll(".pillrow .pill"));
+
+    let activeFilter = "All";
+
+    function groupBySubject(items){
+      const groups = new Map();
+      for(const t of items){
+        if(!groups.has(t.subject)) groups.set(t.subject, []);
+        groups.get(t.subject).push(t);
+      }
+      for(const [k, v] of groups.entries()){
+        v.sort((a,b) => a.grade - b.grade);
+      }
+      return groups;
+    }
+
+    function matchesQuery(test, q){
+      if(!q) return true;
+      q = q.toLowerCase().trim();
+      const blob = `${test.label} grade ${test.grade} ${test.subject}`.toLowerCase();
+      return blob.includes(q);
+    }
+
+    function getFiltered(){
+      const q = qEl.value || "";
+      return TESTS.filter(t => {
+        const filterOk = (activeFilter === "All") || (t.subject === activeFilter);
+        const qOk = matchesQuery(t, q);
+        return filterOk && qOk;
+      });
+    }
+
+    function render(){
+      const filtered = getFiltered();
+      const groups = groupBySubject(filtered);
+
+      if(filtered.length === 0){
+        listsEl.innerHTML = `<p class="muted">No matches. Try a different search.</p>`;
+        return;
+      }
+
+      let html = "";
+      for(const [subject, items] of groups.entries()){
+        html += `<h2>${subject} Tests</h2><ul>`;
+        for(const t of items){
+          html += `<li><a href="${t.href}">${t.label}</a> <span class="small">(${t.href})</span></li>`;
+        }
+        html += `</ul>`;
+      }
+      listsEl.innerHTML = html;
+    }
+
+    pillButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        pillButtons.forEach(b => b.setAttribute("aria-pressed","false"));
+        btn.setAttribute("aria-pressed","true");
+        activeFilter = btn.dataset.filter || "All";
+        render();
+      });
+    });
+
+    qEl.addEventListener("input", render);
+
+    render();
+  </script>
+</body>
+</html>
