@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Knights of Columbus – 2026 Knowledge Contest – Math Grade 7 (Auto-Scored)</title>
+  <style>
+    :root{
+      --bg:#f6f7fb; --card:#ffffff; --ink:#1f2937; --muted:#6b7280;
+      --kc-red:#b5121b; --kc-blue:#003a70;
+      --ok:#e7f8ef; --bad:#fde8e8; --border:#e5e7eb;
+      --shadow:0 8px 24px rgba(0,0,0,.08); --radius:14px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji";background:var(--bg);color:var(--ink);line-height:1.35;}
+    .wrap{max-width:980px;margin:24px auto;padding:0 14px}
+    header{background:linear-gradient(135deg,var(--kc-blue),#0b5aa1);color:white;border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 18px 16px;}
+    .title{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;justify-content:space-between}
+    h1{margin:0;font-size:20px;letter-spacing:.2px}
+    .badge{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.22);padding:6px 10px;border-radius:999px;font-size:12px}
+    .sub{margin:8px 0 0;font-size:13px;color:rgba(255,255,255,.92)}
+    .card{background:var(--card);margin:14px 0;border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 6px 18px rgba(0,0,0,.06);padding:16px;}
+    .instructions{display:grid;gap:8px;font-size:14px;}
+    .instructions ul{margin:6px 0 0 18px}
+    .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:12px}
+    label{font-weight:600}
+    input[type="text"]{width:min(420px,100%);padding:10px 12px;border:1px solid var(--border);border-radius:10px;font-size:14px;outline:none;}
+    input[type="text"]:focus{border-color:#93c5fd;box-shadow:0 0 0 3px rgba(147,197,253,.35)}
+    .section-title{margin:0 0 10px;font-size:16px;color:var(--kc-blue);display:flex;align-items:center;gap:10px}
+    .section-title .pill{font-size:12px;background:#eef2ff;border:1px solid #dbeafe;padding:4px 10px;border-radius:999px;color:#1e40af}
+    .q{border:1px solid var(--border);border-radius:12px;padding:12px;margin:10px 0;background:#fff;}
+    .q.correct{background:var(--ok); border-color:#a7f3d0}
+    .q.incorrect{background:var(--bad); border-color:#fecaca}
+    .qhead{display:flex;gap:10px;align-items:flex-start}
+    .qnum{min-width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#f3f4f6;border:1px solid var(--border);font-weight:700;}
+    .qtext{flex:1}
+    .choices{margin-top:10px;display:grid;gap:8px}
+    .choice{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border:1px solid var(--border);border-radius:10px;background:#fbfbfc;}
+    .choice input{margin-top:3px}
+    .sa{margin-top:10px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    .sa input[type="text"]{width:min(320px,100%)}
+    .actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    button{border:0;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer;font-size:14px;}
+    .primary{background:var(--kc-red);color:white}
+    .primary:hover{filter:brightness(.95)}
+    .ghost{background:#f3f4f6;color:#111827;border:1px solid var(--border)}
+    .ghost:hover{background:#eef2f7}
+    .note{color:var(--muted);font-size:12px}
+    .results{border:1px solid var(--border);border-radius:14px;padding:14px;background:#f8fafc;display:none;}
+    .results h2{margin:0 0 8px;font-size:16px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:10px}
+    .stat{background:white;border:1px solid var(--border);border-radius:12px;padding:10px;}
+    .stat .k{font-size:12px;color:var(--muted)}
+    .stat .v{font-size:18px;font-weight:800;margin-top:2px}
+    .answer-key{margin-top:10px;display:none;font-size:13px;color:#111827;}
+    .answer-key .tag{display:inline-block;padding:4px 10px;border-radius:999px;border:1px solid var(--border);background:#ffffff;font-weight:700;margin-right:8px;}
+    .answer-key .val{color:#111827;font-weight:700;}
+    .answer-key .muted{color:var(--muted);font-weight:600;}
+    @media print{
+      body{background:white}
+      header{box-shadow:none}
+      .card{box-shadow:none}
+      button,.note{display:none!important}
+      .results{display:block!important}
+      .answer-key{display:none!important}
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="title">
+      <h1>Knights of Columbus – 2026 Knowledge Contest – Mathematics (Grade 7)</h1>
+      <div class="badge">Online • Auto-Scored • Printable</div>
+    </div>
+    <div class="sub">Multiple Choice 1–30 (1 point each) • Short Answer 31–40 (2 points each)</div>
+  </header>
+
+  <div class="card">
+    <div class="instructions">
+      <div><strong>Instructions</strong></div>
+      <ul>
+        <li><strong>Time:</strong> 30 minutes. Answer as many of the 40 questions as you can.</li>
+        <li><strong>Tools:</strong> Use pencil and scratch paper. No calculators, smartphones, or smart watches.</li>
+        <li><strong>Submit:</strong> Click <strong>Submit &amp; Score</strong> to score instantly and download a CSV of answers.</li>
+      </ul>
+      <div class="row">
+        <label for="studentName">Student Name <span style="color:#b5121b">*</span>:</label>
+        <input id="studentName" type="text" placeholder="Type your name here…" autocomplete="name" />
+      </div>
+      <div class="note">CSV downloads locally to your computer after scoring (works offline).</div>
+    </div>
+  </div>
+
+  <form id="testForm" class="card" onsubmit="return false;">
+    <div class="section-title">Multiple Choice <span class="pill">Questions 1–30</span></div>
+    <div id="mc"></div>
+
+    <div class="section-title" style="margin-top:18px;">Short Answer <span class="pill">Questions 31–40</span></div>
+    <div id="sa"></div>
+
+    <div class="actions" style="margin-top:16px;">
+      <button class="primary" id="scoreBtn" type="button">Submit &amp; Score</button>
+      <button class="ghost" id="resetBtn" type="button">Reset (Teacher)</button>
+      <button class="ghost" id="revealBtn" type="button">Reveal Answers (Teacher)</button>
+      <span class="note">Only answered questions are highlighted ✅/❌ after scoring.</span>
+    </div>
+
+    <div class="results" id="resultsBox" aria-live="polite">
+      <h2 id="resultsTitle">Results</h2>
+      <div class="grid">
+        <div class="stat"><div class="k">Student</div><div class="v" id="rName">—</div></div>
+        <div class="stat"><div class="k">Total Score</div><div class="v" id="rTotal">—</div></div>
+        <div class="stat"><div class="k">Percent</div><div class="v" id="rPct">—</div></div>
+        <div class="stat"><div class="k">MC (1–30)</div><div class="v" id="rMC">—</div></div>
+        <div class="stat"><div class="k">Short Answer (31–40)</div><div class="v" id="rSA">—</div></div>
+      </div>
+      <div class="note" style="margin-top:10px;">Printing tip: Use your browser’s Print command. This page is print-friendly.</div>
+    </div>
+  </form>
+</div>
+
+<script>
+const TEACHER_CODE = "KOC2026";
+let hasSubmitted = false;
+
+
+
+function lockAllInputs(){
+  // Lock student name + all answer inputs after submission
+  const name = document.getElementById("studentName");
+  if (name) name.disabled = true;
+  document.querySelectorAll("#testForm input").forEach(el=>{ el.disabled = true; });
+}
+
+function unlockAllInputs(){
+  // Unlock student name + all answer inputs (teacher reset)
+  const name = document.getElementById("studentName");
+  if (name) name.disabled = false;
+  document.querySelectorAll("#testForm input").forEach(el=>{ el.disabled = false; });
+}
+
+const MC_QUESTIONS = [
+  {n:1, t:"2 1/3 + 1 3/4 + 5/3 = __?__", a:["5 3/4","4 11/12","5 7/12","not given"]},
+  {n:2, t:"The city of New York uses about one billion, 300 million gallons of water daily. Which numeral represents this amount?", a:["1,000,300,000","1,003,000,000","1,300,000,000","not given"]},
+  {n:3, t:"17 1/3 − 11 3/8 = __?__", a:["5 7/8","6 23/24","5 23/24","not given"]},
+  {n:4, t:"5983 + 2198 + 4427 = __?__", a:["12,598","11,608","12,608","not given"]},
+  {n:5, t:"400,286 − 299,197 = __?__", a:["110,189","101,089","201,199","not given"]},
+  {n:6, t:"2 4/5 × 1 3/8 = __?__", a:["3 7/8","3 13/20","3/35","not given"]},
+  {n:7, t:"208 × 690 = __?__", a:["143,520","142,520","31,200","not given"]},
+  {n:8, t:"179.84 + 2.8567 + 163.8 + 1.512 = __?__", a:["335.15","337.9687","348.0087","not given"]},
+  {n:9, t:"3.06 × 0.5944 = __?__", a:["2.13984","1.818864","1.808864","not given"]},
+  {n:10, t:"84,982 ÷ 19 = __?__", a:["4472 R 19","4372 R 14","4462 R 14","not given"]},
+  {n:11, t:"4 1/6 ÷ 3 2/3 = __?__", a:["22/25","1 3/22","15 5/18","not given"]},
+  {n:12, t:"The chair lift travels 400 feet per minute. How long does it take for a skier to travel 3900 feet up the hill?", a:["9.5 min","9 min 45 sec","9 1/3 min","not given"]},
+  {n:13, t:"(1 7/8 − 3/5) × 1 2/3 + 3/12 = __?__", a:["1 11/12","1 11/40","2 3/8","not given"]},
+  {n:14, t:"Choose the best unit of measure for the area of Wisconsin.", a:["cm²","m²","km²","not given"]},
+  {n:15, t:"1,481.74 ÷ 4.1 = __?__", a:["361 R 4","36.14","3614","not given"]},
+  {n:16, t:"A box of cereal contains 570 grams and costs $1.89. A serving contains 30 grams. What is the cost per serving to the nearest penny?", a:["$0.08","$0.11","$0.09","not given"]},
+  {n:17, t:"Solve this proportion: 49/28 = 21/y", a:["14","12","15","not given"]},
+  {n:18, t:"On a standard piano 36 of the 88 keys are black. What fraction of the piano’s keys are white?", a:["9/13","13/22","9/22","not given"]},
+  {n:19, t:"Find the greatest common factor of 17, 25, 39.", a:["5","17","3","not given"]},
+  {n:20, t:"Which is an expression for the total distance traveled in 2.35 hours at a speed of x miles per hour?", a:["2.35x","2.35","2.35 + x","x/2.35"]},
+  {n:21, t:"3/8 = __?__ percent", a:["0.375%","37.5%","3.75%","not given"]},
+  {n:22, t:"Write 10.5% as a decimal.", a:["1.05","0.105","10.5","not given"]},
+  {n:23, t:"20% of what number equals 6 1/2?", a:["32.5","0.325","3.25","not given"]},
+  {n:24, t:"Which numbers would you multiply to find 39% of 65?", a:["0.39 × 65","0.39 × 0.65","39 × 65","not given"]},
+  {n:25, t:"Find the least common multiple for 16, 8, 12.", a:["46","64","48","not given"]},
+  {n:26, t:"Find the area of a triangle with a base of 1 1/4 ft and a height of 4 ft.", a:["5 1/4 ft²","2 1/2 ft²","5 ft²","not given"]},
+  {n:27, t:"An aquarium is 3 ft long, 2.5 ft wide and 2.5 ft high. What is its volume?", a:["18.75 ft³","1.875 ft³","187.5 ft³","not given"]},
+  {n:28, t:"What is the formula for the volume of a cylindrical container?", a:["V = 1/3 π r² h","V = π r² h","V = l w h","not given"]},
+  {n:29, t:"How much fencing material is needed to enclose a circular garden with a radius of 7 ft.? (π = 22/7)", a:["44 ft","22 ft","154 ft","not given"]},
+  {n:30, t:"Find the area of a circle whose radius is 14 m. (π = 22/7)", a:["616 m","44 m²","616 m²","not given"]}
+];
+const MC_KEY = {
+  1:"A",
+  2:"C",
+  3:"C",
+  4:"C",
+  5:"B",
+  6:"D",
+  7:"A",
+  8:"C",
+  9:"A",
+  10:"D",
+  11:"B",
+  12:"B",
+  13:"C",
+  14:"C",
+  15:"D",
+  16:"D",
+  17:"B",
+  18:"B",
+  19:"D",
+  20:"A",
+  21:"B",
+  22:"B",
+  23:"A",
+  24:"A",
+  25:"C",
+  26:"B",
+  27:"A",
+  28:"B",
+  29:"A",
+  30:"C"
+};
+const SA_QUESTIONS = [
+  {n:31, t:"Mrs. Cole invested $5000 in a certificate of deposit that pays 7% simple interest per year. What will her investment be worth 6 months later? (I = prt)"},
+  {n:32, t:"In one day a giant kelp plant grew from 75 ft to 76 ft 6 in. Find the percent of increase in its length."},
+  {n:33, t:"If a satellite circled the Earth every 90 minutes how many times would it circle the Earth in one day?"},
+  {n:34, t:"The base of Egypt’s Great Pyramid is a square. Its perimeter is 922.4 m. Find the area of its base. (Round your answer to the nearest m²)"},
+  {n:35, t:"Evaluate xy − yt if x = 39, y = 2/3, and t = 0.63."},
+  {n:36, t:"A dress was sold for $37.50. This was 50% off the retail price. The retail price was a 50% markup of the wholesale price. How much money did the store lose on this sale?"},
+  {n:37, t:"Each side of the Pentagon in Washington, D. C. is 300 m long. Calculate its perimeter in kilometers."},
+  {n:38, t:"An object on the moon weighs 1/6 of what it does on Earth. How many pounds would a 75 kg astronaut wearing a 20 kg space suit weigh on the moon. (One kg = 2.2 lb.) (Round your answer to the nearest pound.)"},
+  {n:39, t:"During the softball season Heather batted 96 times and got 36 hits. Maria had 72 plate appearances and had the same ratio of hits to at-bats. How many hits did she get?"},
+  {n:40, t:"A Ferris wheel has a radius of 21 ft. How many feet of lights were needed for both of its rims? (π = 3.14; round your answer to the nearest foot.)"}
+];
+const SA_ACCEPT = {
+  31: ["$5175.00", "5175", "5175.00"],
+  32: ["2%", "2"],
+  33: ["16"],
+  34: ["53,176 m2", "53176", "53,176", "53176 m2", "53176 m²"],
+  35: ["25.58", "25.580"],
+  36: ["$12.50", "12.5", "12.50"],
+  37: ["1.5 km", "1.5", "1.50"],
+  38: ["35 lb", "35", "35.0"],
+  39: ["27"],
+  40: ["264 ft", "264", "264.0"]
+};
+
+function csvEscape(value){
+  const s = (value === null || value === undefined) ? "" : String(value);
+  if (s.includes(",") || s.includes('"') || s.includes("\n")) return '"' + s.replace(/"/g,'""') + '"';
+  return s;
+}
+function formatLocalTimestamp(){
+  const d = new Date();
+  const pad = (n)=> String(n).padStart(2,"0");
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+}
+function buildResultsCSV(payload){
+  const header = ["Student Name","Timestamp","Total Score","Max Score","Percent","MC Score","MC Max","Short Answer Score","Short Answer Max"];
+  const summary = [payload.studentName,payload.timestamp,payload.total,payload.maxScore,payload.pct,payload.mcPts,payload.maxMc,payload.saPts,payload.maxSa];
+  const lines = [];
+  lines.push(header.map(csvEscape).join(","));
+  lines.push(summary.map(csvEscape).join(","));
+  lines.push("");
+  lines.push(["Question","Type","Prompt","Student Answer","Correct Answer","Points Earned","Max Points","Correct?"].map(csvEscape).join(","));
+  for (const r of payload.rows){
+    lines.push([r.q,r.type,r.prompt,r.student,r.correctAnswer,r.points,r.maxPoints,r.isCorrect?"YES":"NO"].map(csvEscape).join(","));
+  }
+  return lines.join("\n");
+}
+function downloadCSV(filename, csvText){
+  const blob = new Blob([csvText], {type:"text/csv;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+}
+
+/* Parse numeric value from response, ignoring letters/units. Supports fractions & mixed numbers. */
+function parseNumericValue(input){
+  if (input == null) return NaN;
+  let s = String(input).toLowerCase();
+  s = s.replace(/[^0-9\-\.\/\s]/g, " ");
+  s = s.replace(/\s+/g, " ").trim();
+  if (!s) return NaN;
+
+  let m = s.match(/^(-?\d+)\s+(\d+)\s*\/\s*(\d+)$/);
+  if (m){
+    const whole = parseInt(m[1],10), num = parseInt(m[2],10), den = parseInt(m[3],10);
+    if (den === 0) return NaN;
+    const sign = whole < 0 ? -1 : 1;
+    return whole + sign*(num/den);
+  }
+  m = s.match(/^(-?\d+)\s*\/\s*(\d+)$/);
+  if (m){
+    const num = parseInt(m[1],10), den = parseInt(m[2],10);
+    if (den === 0) return NaN;
+    return num/den;
+  }
+  m = s.match(/-?\d+(?:\.\d+)?/);
+  if (m) return parseFloat(m[0]);
+  return NaN;
+}
+function nearlyEqual(a,b){ return isFinite(a) && isFinite(b) && Math.abs(a-b) <= 1e-9; }
+
+function el(tag, attrs={}, children=[]){
+  const e = document.createElement(tag);
+  for (const [k,v] of Object.entries(attrs)){
+    if (k === "class") e.className = v;
+    else if (k === "html") e.innerHTML = v;
+    else e.setAttribute(k, v);
+  }
+  for (const c of children){
+    if (typeof c === "string") e.appendChild(document.createTextNode(c));
+    else e.appendChild(c);
+  }
+  return e;
+}
+
+function render(){
+  const mc = document.getElementById("mc");
+  MC_QUESTIONS.forEach(q=>{
+    const box = el("div",{class:"q", id:`q${q.n}`},[
+      el("div",{class:"qhead"},[
+        el("div",{class:"qnum"},[String(q.n)]),
+        el("div",{class:"qtext"},[ el("div",{html:`<strong>${q.t}</strong>`}) ])
+      ])
+    ]);
+    const choices = el("div",{class:"choices"});
+    const letters = ["A","B","C","D"];
+    q.a.forEach((txt,i)=>{
+      const id = `q${q.n}_${letters[i]}`;
+      choices.appendChild(el("label",{class:"choice", for:id},[
+        el("input",{type:"radio", name:`q${q.n}`, id, value:letters[i]}),
+        el("span",{html:`<strong>${letters[i]}.</strong> ${txt}`})
+      ]));
+    });
+    box.appendChild(choices);
+    box.appendChild(el("div",{class:"answer-key", id:`ak${q.n}`},[
+      el("span",{class:"tag"},["Answer"]),
+      el("span",{class:"val", id:`akv${q.n}`},["—"]),
+      el("span",{class:"muted"},["(teacher)"])
+    ]));
+    mc.appendChild(box);
+  });
+
+  const sa = document.getElementById("sa");
+  SA_QUESTIONS.forEach(q=>{
+    const box = el("div",{class:"q", id:`q${q.n}`},[
+      el("div",{class:"qhead"},[
+        el("div",{class:"qnum"},[String(q.n)]),
+        el("div",{class:"qtext"},[ el("div",{html:`<strong>${q.t}</strong>`}) ])
+      ]),
+      el("div",{class:"sa"},[
+        el("label",{for:`sa${q.n}`},["Answer:"]),
+        el("input",{type:"text", id:`sa${q.n}`, placeholder:"Type your answer (numbers only; units OK)…"})
+      ])
+    ]);
+    box.appendChild(el("div",{class:"answer-key", id:`ak${q.n}`},[
+      el("span",{class:"tag"},["Answer"]),
+      el("span",{class:"val", id:`akv${q.n}`},["—"]),
+      el("span",{class:"muted"},["(teacher)"])
+    ]));
+    sa.appendChild(box);
+  });
+}
+
+function clearHighlights(){ document.querySelectorAll(".q.correct,.q.incorrect").forEach(d=>d.classList.remove("correct","incorrect")); }
+function markQuestion(n, status){
+  const box = document.getElementById(`q${n}`);
+  if (!box) return;
+  box.classList.remove("correct","incorrect");
+  if (status === "correct") box.classList.add("correct");
+  if (status === "incorrect") box.classList.add("incorrect");
+}
+function getMcAnswer(n){ const c=document.querySelector(`input[name="q${n}"]:checked`); return c?c.value:""; }
+function getSaAnswer(n){ const i=document.getElementById(`sa${n}`); return i?i.value:""; }
+
+let answersRevealed = false;
+function showAnswerKeys(){
+  for (let n=1; n<=30; n++){ 
+    const v=document.getElementById(`akv${n}`), c=document.getElementById(`ak${n}`);
+    if (v) v.textContent = MC_KEY[n] || "—";
+    if (c) c.style.display="block";
+  }
+  for (let n=31; n<=40; n++){ 
+    const v=document.getElementById(`akv${n}`), c=document.getElementById(`ak${n}`);
+    if (v){ 
+      let correctVal="—";
+      const accList = SA_ACCEPT[n] || [];
+      for (const item of accList){ const num=parseNumericValue(item); if (isFinite(num)){ correctVal = Number.isInteger(num)?String(num):String(num); break; } }
+      v.textContent = correctVal;
+    }
+    if (c) c.style.display="block";
+  }
+}
+function hideAnswerKeys(){ for (let n=1;n<=40;n++){ const c=document.getElementById(`ak${n}`); if (c) c.style.display="none"; } }
+function toggleRevealAnswers(){
+  const code = prompt("Teacher code required to reveal/hide the answer key:");
+  if (code === null) return;
+  if (code !== TEACHER_CODE){ alert("Incorrect teacher code. Answer key was not changed."); return; }
+  answersRevealed = !answersRevealed;
+  const btn=document.getElementById("revealBtn");
+  if (answersRevealed){ showAnswerKeys(); if (btn) btn.textContent="Hide Answers (Teacher)"; }
+  else { hideAnswerKeys(); if (btn) btn.textContent="Reveal Answers (Teacher)"; }
+}
+
+function score(){
+  const nameInput = document.getElementById("studentName");
+  const name = (nameInput ? nameInput.value.trim() : "");
+  // Validate required name BEFORE locking submission
+  if (!name){
+    alert("Please enter your Student Name before submitting.");
+    if (nameInput) nameInput.focus();
+    return;
+  }
+  if (hasSubmitted) return;
+  const ok = confirm("Submit now? You can only submit once.");
+  if (!ok) return;
+  hasSubmitted = true;
+  const sb = document.getElementById("scoreBtn");
+  if (sb) { sb.disabled = true; sb.textContent = "Submitted"; }
+  lockAllInputs();
+clearHighlights();
+
+  let mcPts=0, saPts=0;
+
+  for (let n=1;n<=30;n++){ 
+    const ans = getMcAnswer(n);
+    if (!ans) continue;
+    if (ans === MC_KEY[n]){ mcPts += 1; markQuestion(n,"correct"); }
+    else markQuestion(n,"incorrect");
+  }
+
+  for (let n=31;n<=40;n++){
+    const raw = getSaAnswer(n);
+    if (!raw.trim()) continue;
+
+    const userVal = parseNumericValue(raw);
+    const accList = SA_ACCEPT[n] || [];
+    let correctVal = NaN;
+    for (const item of accList){ const v=parseNumericValue(item); if (isFinite(v)){ correctVal=v; break; } }
+    if (nearlyEqual(userVal, correctVal)){ saPts += 2; markQuestion(n,"correct"); }
+    else markQuestion(n,"incorrect");
+  }
+
+  const total = mcPts + saPts;
+  const pct = Math.round((total/50)*1000)/10;
+
+  document.getElementById("resultsBox").style.display="block";
+  document.getElementById("rName").textContent = name;
+  document.getElementById("rTotal").textContent = `${total} / 50`;
+  document.getElementById("rPct").textContent = `${pct}%`;
+  document.getElementById("rMC").textContent = `${mcPts} / 30`;
+  document.getElementById("rSA").textContent = `${saPts} / 20`;
+  document.getElementById("resultsTitle").textContent = "Results (Grade 7)";
+
+  const timestamp = formatLocalTimestamp();
+  const rows = [];
+
+  for (let n=1; n<=30; n++){ 
+    const q=MC_QUESTIONS.find(x=>x.n===n) || {};
+    const student=getMcAnswer(n);
+    const correct=MC_KEY[n] || "";
+    const isCorrect = !!student && student===correct;
+    rows.push({q:n,type:"MC",prompt:q.t||"",student:student||"",correctAnswer:correct,points:isCorrect?1:0,maxPoints:1,isCorrect});
+  }
+
+  for (let n=31; n<=40; n++){ 
+    const q=SA_QUESTIONS.find(x=>x.n===n) || {};
+    const studentRaw=getSaAnswer(n);
+    const userVal=parseNumericValue(studentRaw);
+    const accList=SA_ACCEPT[n] || [];
+    let correctVal=NaN;
+    for (const item of accList){ const v=parseNumericValue(item); if (isFinite(v)){ correctVal=v; break; } }
+    const isCorrect = (studentRaw.trim() !== "") && nearlyEqual(userVal, correctVal);
+    rows.push({
+      q:n,type:"SA",prompt:q.t||"",student:studentRaw||"",
+      correctAnswer:(isFinite(correctVal)?(Number.isInteger(correctVal)?String(correctVal):String(correctVal)):""),
+      points:isCorrect?2:0,maxPoints:2,isCorrect
+    });
+  }
+
+  const payload = {studentName:name,timestamp,mcPts,saPts,total,pct:pct+"%",maxScore:50,maxMc:30,maxSa:20,rows};
+  const csvText = buildResultsCSV(payload);
+  const safeName = name.replace(/[^a-z0-9]+/gi,"_").replace(/^_+|_+$/g,"");
+  const filename = `KofC_Grade7_${safeName || "Student"}_${timestamp.replace(/[: ]/g,"-")}.csv`;
+  downloadCSV(filename, csvText);
+
+  document.getElementById("resultsBox").scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function teacherReset(){
+  const code = prompt("Teacher reset code required to clear all answers/results:");
+  if (code === null) return;
+  if (code !== TEACHER_CODE){
+    alert("Incorrect reset code. Answers were not cleared.");
+    return;
+  }
+  if (!confirm("Clear all answers and results?")) return;
+  document.getElementById("testForm").reset();
+  // Student name is outside the form, so clear it explicitly
+  const nameInput = document.getElementById("studentName");
+  if (nameInput) nameInput.value = "";
+  document.getElementById("resultsBox").style.display="none";
+  clearHighlights();
+  hasSubmitted = false;
+  unlockAllInputs();
+  const sb = document.getElementById("scoreBtn");
+  if (sb){ sb.disabled = false; sb.textContent = "Submit & Score"; }
+  if (answersRevealed) showAnswerKeys();
+}
+
+document.getElementById("scoreBtn").addEventListener("click", score);
+document.getElementById("resetBtn").addEventListener("click", teacherReset);
+document.getElementById("revealBtn").addEventListener("click", toggleRevealAnswers);
+
+render();
+</script>
+</body>
+</html>
