@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Council Health Status</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #111827;
+    --muted: #94a3b8;
+    --text: #e5e7eb;
+    --good: #22c55e;
+    --warn: #f59e0b;
+    --bad: #ef4444;
+    --ring-bg: #1f2937;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(180deg, #0b1220 0%, #111827 100%);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    padding: 32px 16px;
+  }
+  .wrap {
+    width: min(980px, 100%);
+  }
+  .card {
+    background: rgba(17,24,39,0.95);
+    border: 1px solid rgba(148,163,184,0.18);
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+  }
+  h1 {
+    margin: 0 0 8px 0;
+    font-size: 30px;
+    line-height: 1.15;
+  }
+  .sub {
+    color: var(--muted);
+    margin-bottom: 28px;
+    font-size: 15px;
+  }
+  .hero {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 28px;
+    align-items: center;
+  }
+  .gauge {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    margin: 0 auto;
+  }
+  .gauge svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+  .gauge .center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
+  .percent {
+    font-size: 54px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .label {
+    color: var(--muted);
+    font-size: 15px;
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+    gap: 14px;
+  }
+  .stat {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(148,163,184,0.14);
+    border-radius: 18px;
+    padding: 16px 18px;
+  }
+  .stat .k {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+  .stat .v {
+    font-size: 28px;
+    font-weight: 700;
+  }
+  .barblock {
+    margin-top: 24px;
+  }
+  .barlabels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .bar {
+    height: 18px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: var(--ring-bg);
+    display: flex;
+  }
+  .seg.baseline { background: linear-gradient(90deg, #16a34a, #22c55e); }
+  .seg.functioning { background: linear-gradient(90deg, #d97706, #f59e0b); }
+  .seg.atrisk { background: linear-gradient(90deg, #dc2626, #ef4444); }
+  .seg.blank { background: #64748b; }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    display: inline-block;
+  }
+  .foot {
+    margin-top: 18px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 28px;
+    font-size: 14px;
+  }
+  th, td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(148,163,184,0.12);
+    text-align: left;
+  }
+  th {
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .status-yes { color: #86efac; font-weight: 700; }
+  .status-warn { color: #fcd34d; font-weight: 700; }
+  .status-no { color: #fca5a5; font-weight: 700; }
+  .status-blank { color: #cbd5e1; font-weight: 700; }
+  @media (max-width: 800px) {
+    .hero { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Council Health Status</h1>
+      <div class="sub">Sheet1 · Column H: <strong>Council Health</strong></div>
+
+      <div class="hero">
+        <div class="gauge">
+          <svg viewBox="0 0 220 220" aria-hidden="true">
+            <circle cx="110" cy="110" r="84" fill="none" stroke="var(--ring-bg)" stroke-width="20" />
+            <circle cx="110" cy="110" r="84" fill="none" stroke="url(#grad)" stroke-width="20"
+              stroke-linecap="round"
+              stroke-dasharray="527.79"
+              stroke-dashoffset="252.20" />
+            <defs>
+              <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#16a34a" />
+                <stop offset="100%" stop-color="#22c55e" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="center">
+            <div class="percent">52.2%</div>
+            <div class="label">Baseline</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="stats">
+            <div class="stat">
+              <div class="k">Total Councils</div>
+              <div class="v">316</div>
+            </div>
+            <div class="stat">
+              <div class="k">Baseline</div>
+              <div class="v">165</div>
+            </div>
+            <div class="stat">
+              <div class="k">Functioning</div>
+              <div class="v">80</div>
+            </div>
+            <div class="stat">
+              <div class="k">At Risk</div>
+              <div class="v">71</div>
+            </div>
+          </div>
+
+          <div class="barblock">
+            <div class="barlabels">
+              <span>Distribution</span>
+              <span>165 of 316 baseline</span>
+            </div>
+            <div class="bar" aria-label="Council health distribution">
+              <div class="seg baseline" style="width:52.215%"></div>
+              <div class="seg functioning" style="width:25.316%"></div>
+              <div class="seg atrisk" style="width:22.468%"></div>
+              <div class="seg blank" style="width:0.000%"></div>
+            </div>
+            <div class="legend">
+              <span><i class="dot" style="background:#22c55e"></i> Baseline</span>
+              <span><i class="dot" style="background:#f59e0b"></i> Functioning</span>
+              <span><i class="dot" style="background:#ef4444"></i> At Risk</span>
+              <span><i class="dot" style="background:#64748b"></i> Blank</span>
+            </div>
+          </div>
+
+          <div class="foot">
+            Based on council rows from the uploaded spreadsheet using the three Council Health levels: Baseline, Functioning, and At Risk.
+          </div>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Council #</th>
+            <th>Location</th>
+            <th>District</th>
+            <th>Council Health</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>499</td><td>Superior</td><td>48091</td><td class="status-yes">Baseline</td></tr>
+<tr><td>524</td><td>Milwaukee</td><td>48064</td><td class="status-yes">Baseline</td></tr>
+<tr><td>531</td><td>Madison</td><td>48047</td><td class="status-yes">Baseline</td></tr>
+<tr><td>596</td><td>Janesville</td><td>48049</td><td class="status-yes">Baseline</td></tr>
+<tr><td>605</td><td>Beloit</td><td>48049</td><td class="status-yes">Baseline</td></tr>
+<tr><td>607</td><td>Appleton</td><td>48010</td><td class="status-yes">Baseline</td></tr>
+<tr><td>614</td><td>Oshkosh</td><td>48010</td><td class="status-yes">Baseline</td></tr>
+<tr><td>617</td><td>Green Bay</td><td>48008</td><td class="status-yes">Baseline</td></tr>
+<tr><td>664</td><td>Fond Du Lac</td><td>48061</td><td class="status-yes">Baseline</td></tr>
+<tr><td>669</td><td>Hurley</td><td>48080</td><td class="status-no">At Risk</td></tr>
+<tr><td>697</td><td>Racine</td><td>48072</td><td class="status-yes">Baseline</td></tr>
+<tr><td>710</td><td>Manitowoc</td><td>48012</td><td class="status-yes">Baseline</td></tr>
+<tr><td>719</td><td>Marinette</td><td>48002</td><td class="status-no">At Risk</td></tr>
+<tr><td>722</td><td>Sheboygan</td><td>48061</td><td class="status-yes">Baseline</td></tr>
+<tr><td>746</td><td>Baraboo</td><td>48046</td><td class="status-yes">Baseline</td></tr>
+<tr><td>765</td><td>Cuba City</td><td>48040</td><td class="status-warn">Functioning</td></tr>
+<tr><td>832</td><td>Ashland</td><td>48080</td><td class="status-yes">Baseline</td></tr>
+<tr><td>839</td><td>La Crosse</td><td>48025</td><td class="status-warn">Functioning</td></tr>
+<tr><td>973</td><td>Kenosha</td><td>48067</td><td class="status-yes">Baseline</td></tr>
+<tr><td>974</td><td>Chippewa Falls</td><td>48022</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1002</td><td>Antigo</td><td>48003</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1033</td><td>Kaukauna</td><td>48009</td><td class="status-no">At Risk</td></tr>
+<tr><td>1069</td><td>Wausau</td><td>48031</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1080</td><td>Darlington</td><td>48041</td><td class="status-warn">Functioning</td></tr>
+<tr><td>1133</td><td>Merrill</td><td>48090</td><td class="status-warn">Functioning</td></tr>
+<tr><td>1170</td><td>Stevens Point</td><td>48033</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1257</td><td>Eau Claire</td><td>48023</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1386</td><td>Platteville</td><td>48040</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1471</td><td>Monroe</td><td>48042</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1475</td><td>Oconto</td><td>48002</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1478</td><td>Watertown</td><td>48048</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1501</td><td>Shullsburg</td><td>48041</td><td class="status-no">At Risk</td></tr>
+<tr><td>1547</td><td>Berlin</td><td>48054</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1558</td><td>Wisconsin Rapids</td><td>48034</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1578</td><td>Burlington</td><td>48073</td><td class="status-warn">Functioning</td></tr>
+<tr><td>1609</td><td>Columbus</td><td>48051</td><td class="status-no">At Risk</td></tr>
+<tr><td>1637</td><td>Portage</td><td>48046</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1647</td><td>Lake Geneva</td><td>48073</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1654</td><td>Arcadia</td><td>48024</td><td class="status-warn">Functioning</td></tr>
+<tr><td>1669</td><td>Waterloo</td><td>48051</td><td class="status-no">At Risk</td></tr>
+<tr><td>1690</td><td>Whitewater</td><td>48070</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1709</td><td>South Milwaukee</td><td>48065</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1744</td><td>Medford</td><td>48090</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1762</td><td>Hudson</td><td>48081</td><td class="status-warn">Functioning</td></tr>
+<tr><td>1789</td><td>Plymouth</td><td>48061</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1797</td><td>New London</td><td>48005</td><td class="status-no">At Risk</td></tr>
+<tr><td>1799</td><td>Marshfield</td><td>48032</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1825</td><td>Waukesha</td><td>48062</td><td class="status-no">At Risk</td></tr>
+<tr><td>1837</td><td>Beaver Dam</td><td>48071</td><td class="status-warn">Functioning</td></tr>
+<tr><td>1838</td><td>Menasha-Neenah</td><td>48010</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1840</td><td>Prairie Du Chien</td><td>48026</td><td class="status-no">At Risk</td></tr>
+<tr><td>1864</td><td>Jefferson</td><td>48050</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1909</td><td>Highland</td><td>48055</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1922</td><td>Clintonville</td><td>48003</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1957</td><td>Two Rivers</td><td>48012</td><td class="status-yes">Baseline</td></tr>
+<tr><td>1964</td><td>West Bend</td><td>48066</td><td class="status-yes">Baseline</td></tr>
+<tr><td>2032</td><td>Rhinelander</td><td>48085</td><td class="status-yes">Baseline</td></tr>
+<tr><td>2035</td><td>Port Washington</td><td>48066</td><td class="status-yes">Baseline</td></tr>
+<tr><td>2055</td><td>Menomonie</td><td>48021</td><td class="status-yes">Baseline</td></tr>
+<tr><td>2066</td><td>Tomahawk</td><td>Unassigned</td><td class="status-no">At Risk</td></tr>
+<tr><td>2137</td><td>Rice Lake</td><td>48083</td><td class="status-yes">Baseline</td></tr>
+<tr><td>2210</td><td>Algoma</td><td>48004</td><td class="status-warn">Functioning</td></tr>
+<tr><td>2422</td><td>Durand</td><td>48021</td><td class="status-yes">Baseline</td></tr>
+<tr><td>2478</td><td>Sturgeon Bay</td><td>48004</td><td class="status-yes">Baseline</td></tr>
+<tr><td>2481</td><td>Ladysmith</td><td>48083</td><td class="status-warn">Functioning</td></tr>
+<tr><td>2487</td><td>Oconomowoc</td><td>48063</td><td class="status-yes">Baseline</td></tr>
+<tr><td>2556</td><td>Chilton</td><td>48011</td><td class="status-yes">Baseline</td></tr>
+<tr><td>2639</td><td>Park Falls</td><td>48080</td><td class="status-no">At Risk</td></tr>
+<tr><td>2689</td><td>Hartford</td><td>48060</td><td class="status-warn">Functioning</td></tr>
+<tr><td>2770</td><td>Mauston</td><td>48028</td><td class="status-yes">Baseline</td></tr>
+<tr><td>2787</td><td>Independence</td><td>48024</td><td class="status-warn">Functioning</td></tr>
+<tr><td>2820</td><td>Lancaster</td><td>48040</td><td class="status-yes">Baseline</td></tr>
+<tr><td>2836</td><td>Shawano</td><td>48003</td><td class="status-warn">Functioning</td></tr>
+<tr><td>2845</td><td>New Richmond</td><td>48082</td><td class="status-yes">Baseline</td></tr>
+<tr><td>2847</td><td>Niagara</td><td>48003</td><td class="status-yes">Baseline</td></tr>
+<tr><td>2854</td><td>Mineral Point</td><td>48055</td><td class="status-yes">Baseline</td></tr>
+<tr><td>2963</td><td>Phillips</td><td>48090</td><td class="status-no">At Risk</td></tr>
+<tr><td>2984</td><td>Kewaunee</td><td>48004</td><td class="status-no">At Risk</td></tr>
+<tr><td>2990</td><td>Seymour</td><td>48005</td><td class="status-no">At Risk</td></tr>
+<tr><td>3095</td><td>West Allis</td><td>48062</td><td class="status-yes">Baseline</td></tr>
+<tr><td>3099</td><td>Sauk City</td><td>48043</td><td class="status-yes">Baseline</td></tr>
+<tr><td>3249</td><td>Stanley</td><td>48022</td><td class="status-yes">Baseline</td></tr>
+<tr><td>3396</td><td>Ft Atkinson</td><td>48050</td><td class="status-yes">Baseline</td></tr>
+<tr><td>3432</td><td>Waupaca</td><td>48014</td><td class="status-warn">Functioning</td></tr>
+<tr><td>3450</td><td>Spring Green</td><td>48043</td><td class="status-warn">Functioning</td></tr>
+<tr><td>3464</td><td>Elkhorn</td><td>48070</td><td class="status-yes">Baseline</td></tr>
+<tr><td>3492</td><td>Richland Center</td><td>48030</td><td class="status-warn">Functioning</td></tr>
+<tr><td>3557</td><td>Minocqua</td><td>48085</td><td class="status-no">At Risk</td></tr>
+<tr><td>3562</td><td>Pewaukee</td><td>48063</td><td class="status-yes">Baseline</td></tr>
+<tr><td>3702</td><td>Brookfield</td><td>48062</td><td class="status-warn">Functioning</td></tr>
+<tr><td>3805</td><td>Reedsburg</td><td>48046</td><td class="status-yes">Baseline</td></tr>
+<tr><td>3825</td><td>Whitehall</td><td>48024</td><td class="status-no">At Risk</td></tr>
+<tr><td>3924</td><td>Cross Plains</td><td>48045</td><td class="status-yes">Baseline</td></tr>
+<tr><td>3955</td><td>De Pere</td><td>48008</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4106</td><td>Union Grove</td><td>48072</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4125</td><td>Tomah</td><td>48028</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4240</td><td>Menomonee Falls</td><td>48063</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4295</td><td>Union Center</td><td>48030</td><td class="status-warn">Functioning</td></tr>
+<tr><td>4392</td><td>Wisconsin Dells</td><td>48046</td><td class="status-no">At Risk</td></tr>
+<tr><td>4416</td><td>Bloomington</td><td>48040</td><td class="status-no">At Risk</td></tr>
+<tr><td>4419</td><td>Plain</td><td>48101</td><td class="status-no">At Risk</td></tr>
+<tr><td>4439</td><td>Pulaski</td><td>48006</td><td class="status-no">At Risk</td></tr>
+<tr><td>4489</td><td>Kimberly</td><td>48009</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4505</td><td>Green Bay</td><td>48008</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4520</td><td>Cedarburg</td><td>48069</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4527</td><td>Madison</td><td>48047</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4549</td><td>Middleton</td><td>48045</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4579</td><td>East Troy</td><td>48070</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4580</td><td>Hales Corners</td><td>48068</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4586</td><td>Madison E</td><td>48044</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4592</td><td>Sparta</td><td>48028</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4614</td><td>Milwaukee</td><td>48065</td><td class="status-no">At Risk</td></tr>
+<tr><td>4628</td><td>Schofield</td><td>48031</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4634</td><td>Thorp</td><td>48027</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4646</td><td>Junction City</td><td>48033</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4648</td><td>Brookfield</td><td>48062</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4671</td><td>Crivitz</td><td>48002</td><td class="status-warn">Functioning</td></tr>
+<tr><td>4697</td><td>Black River Falls</td><td>48029</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4706</td><td>Milwaukee</td><td>48069</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4735</td><td>Denmark</td><td>48013</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4774</td><td>Princeton</td><td>48054</td><td class="status-warn">Functioning</td></tr>
+<tr><td>4807</td><td>Mishicot</td><td>48012</td><td class="status-warn">Functioning</td></tr>
+<tr><td>4831</td><td>Sturtevant</td><td>48072</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4869</td><td>Oconto Falls</td><td>48002</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4877</td><td>Ripon</td><td>48071</td><td class="status-warn">Functioning</td></tr>
+<tr><td>4879</td><td>Sun Prairie</td><td>48051</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4896</td><td>Sister Bay</td><td>48004</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4897</td><td>Waupun</td><td>48071</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4902</td><td>River Falls</td><td>48081</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4948</td><td>Cornell</td><td>48022</td><td class="status-yes">Baseline</td></tr>
+<tr><td>4954</td><td>Glenwood City</td><td>48082</td><td class="status-warn">Functioning</td></tr>
+<tr><td>4963</td><td>Loyal</td><td>48027</td><td class="status-warn">Functioning</td></tr>
+<tr><td>5008</td><td>Tigerton</td><td>48003</td><td class="status-warn">Functioning</td></tr>
+<tr><td>5127</td><td>Colby</td><td>48027</td><td class="status-yes">Baseline</td></tr>
+<tr><td>5193</td><td>Mondovi</td><td>48021</td><td class="status-warn">Functioning</td></tr>
+<tr><td>5382</td><td>Green Bay</td><td>48013</td><td class="status-warn">Functioning</td></tr>
+<tr><td>5397</td><td>Spooner</td><td>48087</td><td class="status-yes">Baseline</td></tr>
+<tr><td>5415</td><td>Eagle River</td><td>48085</td><td class="status-warn">Functioning</td></tr>
+<tr><td>5438</td><td>Mequon-Thiensville</td><td>48069</td><td class="status-yes">Baseline</td></tr>
+<tr><td>5456</td><td>Ellsworth</td><td>48020</td><td class="status-warn">Functioning</td></tr>
+<tr><td>5488</td><td>Mosinee</td><td>48031</td><td class="status-yes">Baseline</td></tr>
+<tr><td>5514</td><td>Neenah</td><td>48010</td><td class="status-yes">Baseline</td></tr>
+<tr><td>5539</td><td>Kiel</td><td>48011</td><td class="status-no">At Risk</td></tr>
+<tr><td>5798</td><td>Reedsville</td><td>48012</td><td class="status-yes">Baseline</td></tr>
+<tr><td>5844</td><td>Luxemburg</td><td>48013</td><td class="status-no">At Risk</td></tr>
+<tr><td>6051</td><td>Cumberland</td><td>48089</td><td class="status-warn">Functioning</td></tr>
+<tr><td>6151</td><td>Boscobel</td><td>48055</td><td class="status-yes">Baseline</td></tr>
+<tr><td>6228</td><td>Wautoma</td><td>48014</td><td class="status-warn">Functioning</td></tr>
+<tr><td>6279</td><td>Howard</td><td>48006</td><td class="status-warn">Functioning</td></tr>
+<tr><td>6370</td><td>Frederic</td><td>48089</td><td class="status-yes">Baseline</td></tr>
+<tr><td>6371</td><td>Waunakee</td><td>48043</td><td class="status-yes">Baseline</td></tr>
+<tr><td>6436</td><td>Dousman</td><td>48062</td><td class="status-warn">Functioning</td></tr>
+<tr><td>6444</td><td>Brussels</td><td>48004</td><td class="status-no">At Risk</td></tr>
+<tr><td>6448</td><td>Muskego</td><td>48068</td><td class="status-yes">Baseline</td></tr>
+<tr><td>6460</td><td>De Forest</td><td>48051</td><td class="status-yes">Baseline</td></tr>
+<tr><td>6463</td><td>Lodi</td><td>48043</td><td class="status-no">At Risk</td></tr>
+<tr><td>6464</td><td>Oneida</td><td>48008</td><td class="status-no">At Risk</td></tr>
+<tr><td>6480</td><td>Tennyson Potosi</td><td>48101</td><td class="status-no">At Risk</td></tr>
+<tr><td>6487</td><td>Galesville</td><td>48024</td><td class="status-yes">Baseline</td></tr>
+<tr><td>6508</td><td>Edgerton</td><td>48042</td><td class="status-no">At Risk</td></tr>
+<tr><td>6547</td><td>Milton</td><td>48050</td><td class="status-yes">Baseline</td></tr>
+<tr><td>6554</td><td>Twin Lakes</td><td>48073</td><td class="status-yes">Baseline</td></tr>
+<tr><td>6560</td><td>Gilman</td><td>48090</td><td class="status-yes">Baseline</td></tr>
+<tr><td>6567</td><td>Osceola</td><td>48082</td><td class="status-no">At Risk</td></tr>
+<tr><td>6568</td><td>Madison</td><td>48047</td><td class="status-yes">Baseline</td></tr>
+<tr><td>6585</td><td>Bloomer</td><td>48022</td><td class="status-yes">Baseline</td></tr>
+<tr><td>6586</td><td>Solon Springs</td><td>48101</td><td class="status-no">At Risk</td></tr>
+<tr><td>6587</td><td>Hayward</td><td>48087</td><td class="status-yes">Baseline</td></tr>
+<tr><td>6599</td><td>Elmwood</td><td>48021</td><td class="status-warn">Functioning</td></tr>
+<tr><td>6630</td><td>Belleville</td><td>48042</td><td class="status-yes">Baseline</td></tr>
+<tr><td>6689</td><td>Coleman</td><td>48002</td><td class="status-no">At Risk</td></tr>
+<tr><td>6690</td><td>Lake Mills</td><td>48048</td><td class="status-warn">Functioning</td></tr>
+<tr><td>6702</td><td>Washburn</td><td>48080</td><td class="status-no">At Risk</td></tr>
+<tr><td>6718</td><td>Adams-Friendship</td><td>48034</td><td class="status-no">At Risk</td></tr>
+<tr><td>6719</td><td>Milwaukee</td><td>48065</td><td class="status-yes">Baseline</td></tr>
+<tr><td>6754</td><td>Chetek</td><td>48083</td><td class="status-yes">Baseline</td></tr>
+<tr><td>6759</td><td>Somerset</td><td>48081</td><td class="status-yes">Baseline</td></tr>
+<tr><td>6764</td><td>Suamico</td><td>48006</td><td class="status-warn">Functioning</td></tr>
+<tr><td>6786</td><td>Mellen</td><td>48101</td><td class="status-no">At Risk</td></tr>
+<tr><td>6789</td><td>Alma</td><td>48024</td><td class="status-warn">Functioning</td></tr>
+<tr><td>6883</td><td>Milwaukee</td><td>48069</td><td class="status-warn">Functioning</td></tr>
+<tr><td>6926</td><td>Lena</td><td>48002</td><td class="status-yes">Baseline</td></tr>
+<tr><td>6997</td><td>Poynette</td><td>48051</td><td class="status-yes">Baseline</td></tr>
+<tr><td>7030</td><td>Hammond</td><td>48081</td><td class="status-yes">Baseline</td></tr>
+<tr><td>7048</td><td>Mukwonago</td><td>48070</td><td class="status-yes">Baseline</td></tr>
+<tr><td>7096</td><td>Cashton</td><td>48028</td><td class="status-yes">Baseline</td></tr>
+<tr><td>7106</td><td>Superior</td><td>48091</td><td class="status-warn">Functioning</td></tr>
+<tr><td>7132</td><td>Butternut</td><td>48080</td><td class="status-no">At Risk</td></tr>
+<tr><td>7319</td><td>Bruce</td><td>48083</td><td class="status-warn">Functioning</td></tr>
+<tr><td>7342</td><td>Prescott</td><td>48020</td><td class="status-yes">Baseline</td></tr>
+<tr><td>7370</td><td>Hazel Green</td><td>48040</td><td class="status-warn">Functioning</td></tr>
+<tr><td>7489</td><td>Hollandale</td><td>48053</td><td class="status-warn">Functioning</td></tr>
+<tr><td>7498</td><td>Ashwaubenon</td><td>48008</td><td class="status-yes">Baseline</td></tr>
+<tr><td>7732</td><td>Hilbert</td><td>48011</td><td class="status-yes">Baseline</td></tr>
+<tr><td>7775</td><td>Cottage Grove</td><td>48044</td><td class="status-warn">Functioning</td></tr>
+<tr><td>7798</td><td>Hubertus</td><td>48060</td><td class="status-warn">Functioning</td></tr>
+<tr><td>7811</td><td>Mazomanie</td><td>48043</td><td class="status-yes">Baseline</td></tr>
+<tr><td>7827</td><td>Woodruff</td><td>48085</td><td class="status-warn">Functioning</td></tr>
+<tr><td>7848</td><td>Turtle Lake</td><td>48089</td><td class="status-no">At Risk</td></tr>
+<tr><td>7894</td><td>Owen</td><td>48027</td><td class="status-warn">Functioning</td></tr>
+<tr><td>7895</td><td>Hortonville</td><td>48005</td><td class="status-yes">Baseline</td></tr>
+<tr><td>8061</td><td>Freedom</td><td>48101</td><td class="status-no">At Risk</td></tr>
+<tr><td>8172</td><td>Waterford</td><td>48073</td><td class="status-yes">Baseline</td></tr>
+<tr><td>8649</td><td>Fontana</td><td>48101</td><td class="status-no">At Risk</td></tr>
+<tr><td>8810</td><td>Winneconne</td><td>48010</td><td class="status-yes">Baseline</td></tr>
+<tr><td>8817</td><td>Mayville</td><td>48060</td><td class="status-warn">Functioning</td></tr>
+<tr><td>8946</td><td>Cazenovia</td><td>48030</td><td class="status-no">At Risk</td></tr>
+<tr><td>8985</td><td>Webster</td><td>48087</td><td class="status-warn">Functioning</td></tr>
+<tr><td>9070</td><td>Hillsboro</td><td>48030</td><td class="status-warn">Functioning</td></tr>
+<tr><td>9078</td><td>Rio</td><td>48101</td><td class="status-no">At Risk</td></tr>
+<tr><td>9082</td><td>Madison</td><td>48044</td><td class="status-yes">Baseline</td></tr>
+<tr><td>9230</td><td>Janesville</td><td>48049</td><td class="status-yes">Baseline</td></tr>
+<tr><td>9360</td><td>Janesville</td><td>48049</td><td class="status-yes">Baseline</td></tr>
+<tr><td>9371</td><td>Almena</td><td>48089</td><td class="status-no">At Risk</td></tr>
+<tr><td>9385</td><td>Holmen</td><td>48025</td><td class="status-warn">Functioning</td></tr>
+<tr><td>9438</td><td>Middle Ridge-Bangor</td><td>48025</td><td class="status-warn">Functioning</td></tr>
+<tr><td>9546</td><td>Birchwood</td><td>48083</td><td class="status-no">At Risk</td></tr>
+<tr><td>10158</td><td>Wilton/Kendall</td><td>48029</td><td class="status-no">At Risk</td></tr>
+<tr><td>10243</td><td>Green Bay</td><td>48013</td><td class="status-yes">Baseline</td></tr>
+<tr><td>10260</td><td>Flintville</td><td>48006</td><td class="status-no">At Risk</td></tr>
+<tr><td>10522</td><td>Pittsville</td><td>48034</td><td class="status-no">At Risk</td></tr>
+<tr><td>10552</td><td>Green Bay</td><td>48013</td><td class="status-warn">Functioning</td></tr>
+<tr><td>10559</td><td>Mount Horeb</td><td>48053</td><td class="status-warn">Functioning</td></tr>
+<tr><td>10675</td><td>Stetsonville</td><td>48101</td><td class="status-no">At Risk</td></tr>
+<tr><td>10714</td><td>Greenbay</td><td>48006</td><td class="status-warn">Functioning</td></tr>
+<tr><td>10715</td><td>Germantown</td><td>48063</td><td class="status-yes">Baseline</td></tr>
+<tr><td>10774</td><td>Augusta</td><td>48023</td><td class="status-yes">Baseline</td></tr>
+<tr><td>10893</td><td>Madison</td><td>48044</td><td class="status-warn">Functioning</td></tr>
+<tr><td>10905</td><td>Ridgeway-Barneveld</td><td>48053</td><td class="status-yes">Baseline</td></tr>
+<tr><td>10914</td><td>Onalaska</td><td>48025</td><td class="status-yes">Baseline</td></tr>
+<tr><td>10919</td><td>Little Chute</td><td>48009</td><td class="status-warn">Functioning</td></tr>
+<tr><td>10920</td><td>Evansville</td><td>48042</td><td class="status-warn">Functioning</td></tr>
+<tr><td>10976</td><td>Sussex</td><td>48063</td><td class="status-yes">Baseline</td></tr>
+<tr><td>11129</td><td>Sheboygan Falls</td><td>48061</td><td class="status-yes">Baseline</td></tr>
+<tr><td>11155</td><td>Verona</td><td>48045</td><td class="status-yes">Baseline</td></tr>
+<tr><td>11301</td><td>Campbellsport</td><td>48066</td><td class="status-yes">Baseline</td></tr>
+<tr><td>11305</td><td>Oshkosh</td><td>48010</td><td class="status-no">At Risk</td></tr>
+<tr><td>11657</td><td>Fredonia</td><td>48101</td><td class="status-no">At Risk</td></tr>
+<tr><td>11832</td><td>Fountain City</td><td>48024</td><td class="status-no">At Risk</td></tr>
+<tr><td>11834</td><td>Green Bay</td><td>48013</td><td class="status-yes">Baseline</td></tr>
+<tr><td>11884</td><td>Belmont</td><td>48041</td><td class="status-yes">Baseline</td></tr>
+<tr><td>12183</td><td>Seneca</td><td>48026</td><td class="status-no">At Risk</td></tr>
+<tr><td>12185</td><td>Keshena</td><td>48003</td><td class="status-no">At Risk</td></tr>
+<tr><td>12269</td><td>Appleton</td><td>48010</td><td class="status-yes">Baseline</td></tr>
+<tr><td>12393</td><td>New Holstein</td><td>48011</td><td class="status-warn">Functioning</td></tr>
+<tr><td>12467</td><td>Polonia</td><td>48033</td><td class="status-warn">Functioning</td></tr>
+<tr><td>12468</td><td>Altoona</td><td>48023</td><td class="status-no">At Risk</td></tr>
+<tr><td>12491</td><td>Stoughton</td><td>48042</td><td class="status-yes">Baseline</td></tr>
+<tr><td>12588</td><td>Slinger</td><td>48060</td><td class="status-warn">Functioning</td></tr>
+<tr><td>12596</td><td>Mackville</td><td>48005</td><td class="status-no">At Risk</td></tr>
+<tr><td>12606</td><td>Gays Mills</td><td>48101</td><td class="status-no">At Risk</td></tr>
+<tr><td>12609</td><td>Balsam Lake/Centuria</td><td>48089</td><td class="status-warn">Functioning</td></tr>
+<tr><td>12621</td><td>Lomira</td><td>48066</td><td class="status-no">At Risk</td></tr>
+<tr><td>12644</td><td>Fennimore</td><td>48055</td><td class="status-yes">Baseline</td></tr>
+<tr><td>12662</td><td>Nekoosa/Port Edwards</td><td>48034</td><td class="status-warn">Functioning</td></tr>
+<tr><td>12673</td><td>Necedah</td><td>48029</td><td class="status-warn">Functioning</td></tr>
+<tr><td>12677</td><td>Reeseville</td><td>48071</td><td class="status-warn">Functioning</td></tr>
+<tr><td>12709</td><td>Sullivan</td><td>48050</td><td class="status-warn">Functioning</td></tr>
+<tr><td>12738</td><td>Iron River</td><td>48091</td><td class="status-yes">Baseline</td></tr>
+<tr><td>12743</td><td>St Lawrence</td><td>48060</td><td class="status-yes">Baseline</td></tr>
+<tr><td>12793</td><td>Plainfield</td><td>48014</td><td class="status-warn">Functioning</td></tr>
+<tr><td>13083</td><td>Redgranite</td><td>48014</td><td class="status-no">At Risk</td></tr>
+<tr><td>13480</td><td>Oregon</td><td>48042</td><td class="status-yes">Baseline</td></tr>
+<tr><td>13583</td><td>Milwaukee</td><td>48065</td><td class="status-yes">Baseline</td></tr>
+<tr><td>13702</td><td>Weyauwega</td><td>48014</td><td class="status-no">At Risk</td></tr>
+<tr><td>13733</td><td>Village Of Big Bend</td><td>48068</td><td class="status-yes">Baseline</td></tr>
+<tr><td>13880</td><td>Plover</td><td>48033</td><td class="status-yes">Baseline</td></tr>
+<tr><td>14362</td><td>Kenosha</td><td>48067</td><td class="status-no">At Risk</td></tr>
+<tr><td>14478</td><td>Horicon</td><td>48071</td><td class="status-warn">Functioning</td></tr>
+<tr><td>14677</td><td>Green Bay</td><td>48101</td><td class="status-no">At Risk</td></tr>
+<tr><td>15090</td><td>Waukesha</td><td>48068</td><td class="status-yes">Baseline</td></tr>
+<tr><td>15229</td><td>Cambridge</td><td>48050</td><td class="status-warn">Functioning</td></tr>
+<tr><td>15276</td><td>Genesee Depot</td><td>48070</td><td class="status-yes">Baseline</td></tr>
+<tr><td>15571</td><td>Wausau</td><td>48101</td><td class="status-no">At Risk</td></tr>
+<tr><td>15659</td><td>Racine</td><td>48072</td><td class="status-yes">Baseline</td></tr>
+<tr><td>15665</td><td>Burlington</td><td>48073</td><td class="status-warn">Functioning</td></tr>
+<tr><td>15739</td><td>Plum City</td><td>48020</td><td class="status-yes">Baseline</td></tr>
+<tr><td>16022</td><td>Pleasant Prairie</td><td>48067</td><td class="status-yes">Baseline</td></tr>
+<tr><td>16079</td><td>Pine Bluff</td><td>48045</td><td class="status-no">At Risk</td></tr>
+<tr><td>16171</td><td>Milwaukee</td><td>48064</td><td class="status-warn">Functioning</td></tr>
+<tr><td>16217</td><td>Combined Locks</td><td>48009</td><td class="status-no">At Risk</td></tr>
+<tr><td>16244</td><td>Greenville</td><td>48005</td><td class="status-warn">Functioning</td></tr>
+<tr><td>16280</td><td>Marathon</td><td>48031</td><td class="status-yes">Baseline</td></tr>
+<tr><td>16298</td><td>Amery</td><td>48082</td><td class="status-warn">Functioning</td></tr>
+<tr><td>16333</td><td>Green Bay</td><td>48013</td><td class="status-yes">Baseline</td></tr>
+<tr><td>16444</td><td>La Crosse</td><td>48025</td><td class="status-warn">Functioning</td></tr>
+<tr><td>16582</td><td>Appleton</td><td>48005</td><td class="status-no">At Risk</td></tr>
+<tr><td>16691</td><td>Superior</td><td>48091</td><td class="status-warn">Functioning</td></tr>
+<tr><td>16710</td><td>Milwaukee</td><td>48064</td><td class="status-yes">Baseline</td></tr>
+<tr><td>16729</td><td>St. Nazianz</td><td>48012</td><td class="status-yes">Baseline</td></tr>
+<tr><td>16765</td><td>Kenosha</td><td>48067</td><td class="status-warn">Functioning</td></tr>
+<tr><td>16821</td><td>Oak Creek</td><td>48065</td><td class="status-yes">Baseline</td></tr>
+<tr><td>16863</td><td>Monona</td><td>48044</td><td class="status-yes">Baseline</td></tr>
+<tr><td>16900</td><td>Wrightstown</td><td>48009</td><td class="status-yes">Baseline</td></tr>
+<tr><td>16937</td><td>Athens</td><td>48031</td><td class="status-no">At Risk</td></tr>
+<tr><td>16994</td><td>Sauk City</td><td>48043</td><td class="status-no">At Risk</td></tr>
+<tr><td>17021</td><td>Boyceville</td><td>48021</td><td class="status-yes">Baseline</td></tr>
+<tr><td>17035</td><td>Abbotsford</td><td>48027</td><td class="status-no">At Risk</td></tr>
+<tr><td>17135</td><td>River Falls</td><td>48020</td><td class="status-warn">Functioning</td></tr>
+<tr><td>17149</td><td>Dyckesville</td><td>48004</td><td class="status-no">At Risk</td></tr>
+<tr><td>17348</td><td>Green Bay</td><td>48008</td><td class="status-no">At Risk</td></tr>
+<tr><td>17459</td><td>Spring Valley</td><td>48020</td><td class="status-warn">Functioning</td></tr>
+<tr><td>17468</td><td>Milwaukee</td><td>48101</td><td class="status-no">At Risk</td></tr>
+<tr><td>17889</td><td>Madison</td><td>48045</td><td class="status-yes">Baseline</td></tr>
+<tr><td>18057</td><td>Elk Mound</td><td>48023</td><td class="status-warn">Functioning</td></tr>
+<tr><td>18201</td><td>Milwaukee</td><td>48065</td><td class="status-yes">Baseline</td></tr>
+<tr><td>18323</td><td>Mount Calvary</td><td>48061</td><td class="status-yes">Baseline</td></tr>
+<tr><td>18366</td><td>Cecil</td><td>48003</td><td class="status-no">At Risk</td></tr>
+<tr><td>18395</td><td>Milwaukee</td><td>48064</td><td class="status-yes">Baseline</td></tr>
+<tr><td>18542</td><td>Milwaukee</td><td>48064</td><td class="status-warn">Functioning</td></tr>
+<tr><td>18664</td><td>Madison</td><td>48047</td><td class="status-no">At Risk</td></tr>
+<tr><td>18673</td><td>Platteville</td><td>48040</td><td class="status-yes">Baseline</td></tr>
+<tr><td>18763</td><td>Grafton</td><td>48069</td><td class="status-yes">Baseline</td></tr>
+<tr><td>18811</td><td>Kenosha</td><td>48067</td><td class="status-yes">Baseline</td></tr>
+<tr><td>18834</td><td>Brookfield</td><td>48062</td><td class="status-yes">Baseline</td></tr>
+<tr><td>18842</td><td>Plateville</td><td>48040</td><td class="status-warn">Functioning</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
