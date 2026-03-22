@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>State KC Calendar 2025–2026</title>
+  <style>
+    :root {
+      --blue: #123b6d;
+      --blue-2: #1f5ea8;
+      --gold: #caa64b;
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #d9e1ec;
+      --shadow: 0 8px 24px rgba(18, 59, 109, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--blue), var(--blue-2));
+      color: white;
+      padding: 32px 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: 2rem;
+      letter-spacing: 0.4px;
+    }
+
+    header p {
+      margin: 0;
+      color: rgba(255,255,255,0.9);
+      font-size: 1rem;
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 24px auto 40px;
+      padding: 0 16px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .due { background: #d14343; }
+    .meeting { background: #215ca0; }
+    .faith { background: #7a4cb1; }
+    .program { background: #1f8b5c; }
+    .event { background: #c48b19; }
+
+    .months {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .month {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .month-header {
+      background: #eef4fb;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .month-header h2 {
+      margin: 0;
+      color: var(--blue);
+      font-size: 1.3rem;
+    }
+
+    .events {
+      padding: 10px 16px 16px;
+    }
+
+    .event-item {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #edf1f6;
+    }
+
+    .event-item:last-child {
+      border-bottom: none;
+      padding-bottom: 4px;
+    }
+
+    .date {
+      font-weight: 700;
+      color: var(--blue);
+      font-size: 0.95rem;
+    }
+
+    .desc {
+      margin: 0;
+      font-size: 0.97rem;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      color: white;
+    }
+
+    .tag.due { background: #d14343; }
+    .tag.meeting { background: #215ca0; }
+    .tag.faith { background: #7a4cb1; }
+    .tag.program { background: #1f8b5c; }
+    .tag.event { background: #c48b19; }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 24px 16px 40px;
+    }
+
+    @media (max-width: 640px) {
+      .event-item {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+      .date {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>State KC Calendar</h1>
+    <p>September 2025 through June 2026</p>
+  </header>
+
+  <div class="wrap">
+    <div class="legend">
+      <span class="badge"><span class="dot due"></span> Due Date</span>
+      <span class="badge"><span class="dot meeting"></span> Meeting</span>
+      <span class="badge"><span class="dot faith"></span> Faith / Feast Day</span>
+      <span class="badge"><span class="dot program"></span> Council Program</span>
+      <span class="badge"><span class="dot event"></span> Event</span>
+    </div>
+
+    <section class="months">
+      <article class="month">
+        <div class="month-header"><h2>September 2025</h2></div>
+        <div class="events">
+          <div class="event-item"><div class="date">Sep 1</div><div><p class="desc">Verify that all previous month FIA Form 10784 submitted</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Sep 5–7</div><div><p class="desc">Special Olympics Fall Games - WI Dells</p><span class="tag event">Event</span></div></div>
+          <div class="event-item"><div class="date">Sep 10</div><div><p class="desc">State Officer Meeting - ZOOM</p><span class="tag meeting">Meeting</span></div></div>
+          <div class="event-item"><div class="date">Sep 13</div><div><p class="desc">Diocesan Meeting Milwaukee - St Monica's Parish</p><span class="tag meeting">Meeting</span></div></div>
+          <div class="event-item"><div class="date">Sep 15</div><div><p class="desc">DUE - DD to submit Form 944 for each Council</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Sep 21</div><div><p class="desc">Diocesan Meeting Superior - St Ann's Catholic Church</p><span class="tag meeting">Meeting</span></div></div>
+          <div class="event-item"><div class="date">Sep 27</div><div><p class="desc">Diocesan Meeting LaCrosse - St Patrick Catholic School</p><span class="tag meeting">Meeting</span></div></div>
+          <div class="event-item"><div class="date">Sep 27</div><div><p class="desc">Diocesan Meeting Madison - St Dennis Parish</p><span class="tag meeting">Meeting</span></div></div>
+          <div class="event-item"><div class="date">Sep 28</div><div><p class="desc">Diocesan Meeting Green Bay - St John Nepomucene</p><span class="tag meeting">Meeting</span></div></div>
+          <div class="event-item"><div class="date">Sep 30</div><div><p class="desc">DUE - Form 11077 FBN Report</p><span class="tag due">Due Date</span></div></div>
+        </div>
+      </article>
+
+      <article class="month">
+        <div class="month-header"><h2>October 2025</h2></div>
+        <div class="events">
+          <div class="event-item"><div class="date">Oct 1</div><div><p class="desc">State PER/CAP Assessment emailed to Financial Secretaries</p><span class="tag program">Program</span></div></div>
+          <div class="event-item"><div class="date">Oct 1</div><div><p class="desc">Verify that all previous month FIA Form 10784 submitted</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Oct 1–Nov 30</div><div><p class="desc">Councils contact schools for Winter Contests</p><span class="tag program">Program</span></div></div>
+          <div class="event-item"><div class="date">Oct 3–19</div><div><p class="desc">Diocesan PPK Soccer Contests</p><span class="tag event">Event</span></div></div>
+          <div class="event-item"><div class="date">Oct 9</div><div><p class="desc">Solemnity of Our Lady of Champion</p><span class="tag faith">Faith</span></div></div>
+          <div class="event-item"><div class="date">Oct 11</div><div><p class="desc">State Officer Meeting - #524 Clubhouse and ZOOM</p><span class="tag meeting">Meeting</span></div></div>
+          <div class="event-item"><div class="date">Oct 13</div><div><p class="desc">Columbus Day - Councils host Landing Day Banquets</p><span class="tag event">Event</span></div></div>
+          <div class="event-item"><div class="date">Oct 18</div><div><p class="desc">4th Degree Exemplification of the Eastern District - Beaver Dam</p><span class="tag event">Event</span></div></div>
+          <div class="event-item"><div class="date">Oct 19</div><div><p class="desc">COR Pilgrimage to Our Lady of Guadalupe Shrine, LaCrosse</p><span class="tag faith">Faith</span></div></div>
+          <div class="event-item"><div class="date">Oct 25</div><div><p class="desc">4th Degree Exemplification of the Western District - Baraboo</p><span class="tag event">Event</span></div></div>
+          <div class="event-item"><div class="date">Oct 31</div><div><p class="desc">DUE - Form 11077 FBN Report</p><span class="tag due">Due Date</span></div></div>
+        </div>
+      </article>
+
+      <article class="month">
+        <div class="month-header"><h2>November 2025</h2></div>
+        <div class="events">
+          <div class="event-item"><div class="date">Nov 1</div><div><p class="desc">All Saints Day</p><span class="tag faith">Faith</span></div></div>
+          <div class="event-item"><div class="date">Nov 1</div><div><p class="desc">Verify that all previous month FIA Form 10784 submitted</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Nov 7</div><div><p class="desc">DUE - Reservations for Winter DD Meeting</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Nov 8</div><div><p class="desc">State Officer Meeting - Madison Office and ZOOM</p><span class="tag meeting">Meeting</span></div></div>
+          <div class="event-item"><div class="date">Nov 15–Dec 20</div><div><p class="desc">Councils hold Keep Christ in Christmas Poster Contests</p><span class="tag program">Program</span></div></div>
+          <div class="event-item"><div class="date">Nov 27</div><div><p class="desc">Thanksgiving Day</p><span class="tag event">Event</span></div></div>
+          <div class="event-item"><div class="date">Nov 30</div><div><p class="desc">Council Citizenship Essay winners DUE to DPC</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Nov 30</div><div><p class="desc">DUE - Form 11077 FBN Report</p><span class="tag due">Due Date</span></div></div>
+        </div>
+      </article>
+
+      <article class="month">
+        <div class="month-header"><h2>December 2025</h2></div>
+        <div class="events">
+          <div class="event-item"><div class="date">Dec 1</div><div><p class="desc">Verify that all previous month FIA Form 10784 submitted</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Dec 1–Mar 2</div><div><p class="desc">Councils hold Knowledge and FTC</p><span class="tag program">Program</span></div></div>
+          <div class="event-item"><div class="date">Dec 5–7</div><div><p class="desc">DD Meeting - Stevens Point</p><span class="tag meeting">Meeting</span></div></div>
+          <div class="event-item"><div class="date">Dec 6–7</div><div><p class="desc">Special Olympics State Bowling Tournament - Weston</p><span class="tag event">Event</span></div></div>
+          <div class="event-item"><div class="date">Dec 8</div><div><p class="desc">Solemnity of The Immaculate Conception</p><span class="tag faith">Faith</span></div></div>
+          <div class="event-item"><div class="date">Dec 12</div><div><p class="desc">Feast Day of Our Lady of Guadalupe - Patroness of the K of C</p><span class="tag faith">Faith</span></div></div>
+          <div class="event-item"><div class="date">Dec 13</div><div><p class="desc">State Officer Meeting - #524 Clubhouse and ZOOM</p><span class="tag meeting">Meeting</span></div></div>
+          <div class="event-item"><div class="date">Dec 25</div><div><p class="desc">Solemnity of the Nativity of Our Lord</p><span class="tag faith">Faith</span></div></div>
+          <div class="event-item"><div class="date">Dec 27–28</div><div><p class="desc">Consecration to The Holy Family</p><span class="tag faith">Faith</span></div></div>
+          <div class="event-item"><div class="date">Dec 31</div><div><p class="desc">Councils SEND Catholic Citizen Essays to State Community Director</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Dec 31</div><div><p class="desc">DUE - Form 11077 FBN Report</p><span class="tag due">Due Date</span></div></div>
+        </div>
+      </article>
+
+      <article class="month">
+        <div class="month-header"><h2>January 2026</h2></div>
+        <div class="events">
+          <div class="event-item"><div class="date">Jan 1</div><div><p class="desc">Solemnity of Mary Mother of God</p><span class="tag faith">Faith</span></div></div>
+          <div class="event-item"><div class="date">Jan 1</div><div><p class="desc">Verify that all previous month FIA Form 10784 submitted</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Jan 2</div><div><p class="desc">Winning Keep Christ in Christmas Posters DUE to DPC</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Jan 6</div><div><p class="desc">Solemnity of Epiphany</p><span class="tag faith">Faith</span></div></div>
+          <div class="event-item"><div class="date">Jan 9–10</div><div><p class="desc">State Officer Meeting with ID Judging - Madison Office and ZOOM</p><span class="tag meeting">Meeting</span></div></div>
+          <div class="event-item"><div class="date">Jan 17</div><div><p class="desc">4th Degree Exemplification of the Eastern District - Manitowoc</p><span class="tag event">Event</span></div></div>
+          <div class="event-item"><div class="date">Jan 22</div><div><p class="desc">National Right to LIFE Day</p><span class="tag faith">Faith</span></div></div>
+          <div class="event-item"><div class="date">Jan 31</div><div><p class="desc">DUE - Form 11077 FBN Report</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Jan 31</div><div><p class="desc">DUE - Fraternal Survey Form 1728</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Jan 31</div><div><p class="desc">DUE - Special Olympics Form 10784</p><span class="tag due">Due Date</span></div></div>
+        </div>
+      </article>
+
+      <article class="month">
+        <div class="month-header"><h2>February 2026</h2></div>
+        <div class="events">
+          <div class="event-item"><div class="date">Feb 1</div><div><p class="desc">Council Tootsie Roll orders DUE to DD</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Feb 1</div><div><p class="desc">Verify that all previous month FIA Form 10784 submitted</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Feb 14</div><div><p class="desc">Feast of St. Valentine</p><span class="tag faith">Faith</span></div></div>
+          <div class="event-item"><div class="date">Feb 14</div><div><p class="desc">State Officer Meeting with BUDGET - #524 Clubhouse</p><span class="tag meeting">Meeting</span></div></div>
+          <div class="event-item"><div class="date">Feb 14–15</div><div><p class="desc">Our Marriage Prayer Weekend</p><span class="tag faith">Faith</span></div></div>
+          <div class="event-item"><div class="date">Feb 14–Mar 15</div><div><p class="desc">State Bowling Tournament - Weston</p><span class="tag event">Event</span></div></div>
+          <div class="event-item"><div class="date">Feb 15</div><div><p class="desc">Council History Books DUE to DD</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Feb 15</div><div><p class="desc">DD send Tootsie Roll orders to ID Chairman</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Feb 15</div><div><p class="desc">DUE - Family of the Year nominations</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Feb 15</div><div><p class="desc">DUE - Medallion Award nominations</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Feb 15</div><div><p class="desc">DUE - Resolutions for the State Convention</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Feb 15</div><div><p class="desc">DUE - Semi-Annual Council Audit</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Feb 18</div><div><p class="desc">Ash Wednesday</p><span class="tag faith">Faith</span></div></div>
+          <div class="event-item"><div class="date">Feb 28</div><div><p class="desc">DUE - Form 11077 FBN Report</p><span class="tag due">Due Date</span></div></div>
+        </div>
+      </article>
+
+      <article class="month">
+        <div class="month-header"><h2>March 2026</h2></div>
+        <div class="events">
+          <div class="event-item"><div class="date">Mar 1</div><div><p class="desc">History Books DUE to DPC</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Mar 1</div><div><p class="desc">State Service Program Award applications DUE</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Mar 1</div><div><p class="desc">Verify that all previous month FIA Form 10784 submitted</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Mar 1–May 25</div><div><p class="desc">Councils hold Spring Soccer Challenge Contests</p><span class="tag program">Program</span></div></div>
+          <div class="event-item"><div class="date">Mar 7–22</div><div><p class="desc">District FTC</p><span class="tag event">Event</span></div></div>
+          <div class="event-item"><div class="date">Mar 14–15</div><div><p class="desc">State Officer Meeting with Resolutions Committee - Madison and ZOOM</p><span class="tag meeting">Meeting</span></div></div>
+          <div class="event-item"><div class="date">Mar 15</div><div><p class="desc">DUE - Culture of Life Essays</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Mar 17</div><div><p class="desc">Feast of St. Patrick and WSD Patrick's birthday</p><span class="tag faith">Faith</span></div></div>
+          <div class="event-item"><div class="date">Mar 19</div><div><p class="desc">Feast of St. Joseph</p><span class="tag faith">Faith</span></div></div>
+          <div class="event-item"><div class="date">Mar 25</div><div><p class="desc">Solemnity of The Annunciation</p><span class="tag faith">Faith</span></div></div>
+          <div class="event-item"><div class="date">Mar 29–Apr 19</div><div><p class="desc">Diocesan Knowledge and Free Throw Contests</p><span class="tag event">Event</span></div></div>
+          <div class="event-item"><div class="date">Mar 29</div><div><p class="desc">Founders Day</p><span class="tag event">Event</span></div></div>
+          <div class="event-item"><div class="date">Mar 31</div><div><p class="desc">Councils SEND Culture of LIFE Essays to DPC</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Mar 31</div><div><p class="desc">DUE - Form 11077 FBN Report</p><span class="tag due">Due Date</span></div></div>
+        </div>
+      </article>
+
+      <article class="month">
+        <div class="month-header"><h2>April 2026</h2></div>
+        <div class="events">
+          <div class="event-item"><div class="date">Apr 1</div><div><p class="desc">State PER/CAP Assessment emailed to Financial Secretaries</p><span class="tag program">Program</span></div></div>
+          <div class="event-item"><div class="date">Apr 1</div><div><p class="desc">Verify that all previous month FIA Form 10784 submitted</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Apr 1–May 3</div><div><p class="desc">State Knowledge and FTC Contests (TBD)</p><span class="tag event">Event</span></div></div>
+          <div class="event-item"><div class="date">Apr 2</div><div><p class="desc">Holy Thursday - Triduum Begins</p><span class="tag faith">Faith</span></div></div>
+          <div class="event-item"><div class="date">Apr 3</div><div><p class="desc">Good Friday</p><span class="tag faith">Faith</span></div></div>
+          <div class="event-item"><div class="date">Apr 5</div><div><p class="desc">Solemnity of Solemnities - EASTER</p><span class="tag faith">Faith</span></div></div>
+          <div class="event-item"><div class="date">Apr 11</div><div><p class="desc">4th Degree Exemplification of the Eastern District - De Pere</p><span class="tag event">Event</span></div></div>
+          <div class="event-item"><div class="date">Apr 11</div><div><p class="desc">State Officer Meeting - #524 Clubhouse and ZOOM</p><span class="tag meeting">Meeting</span></div></div>
+          <div class="event-item"><div class="date">Apr 30</div><div><p class="desc">DUE - Form 11077 FBN Report</p><span class="tag due">Due Date</span></div></div>
+        </div>
+      </article>
+
+      <article class="month">
+        <div class="month-header"><h2>May 2026</h2></div>
+        <div class="events">
+          <div class="event-item"><div class="date">May 1</div><div><p class="desc">Verify that all previous month FIA Form 10784 submitted</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">May 1–31</div><div><p class="desc">Council Officer Elections</p><span class="tag program">Program</span></div></div>
+          <div class="event-item"><div class="date">May 15</div><div><p class="desc">Culture of Life grants DUE to State Office</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">May 15–17</div><div><p class="desc">125th Wisconsin State Convention - Madison Marriott</p><span class="tag event">Event</span></div></div>
+          <div class="event-item"><div class="date">May 31</div><div><p class="desc">DUE - Form 11077 FBN Report</p><span class="tag due">Due Date</span></div></div>
+        </div>
+      </article>
+
+      <article class="month">
+        <div class="month-header"><h2>June 2026</h2></div>
+        <div class="events">
+          <div class="event-item"><div class="date">Jun 1</div><div><p class="desc">Verify that all previous month FIA Form 10784 submitted</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Jun 6–21</div><div><p class="desc">Diocesan Spring Soccer Challenge</p><span class="tag event">Event</span></div></div>
+          <div class="event-item"><div class="date">Jun 13</div><div><p class="desc">State Officer Meeting - #524 Clubhouse and ZOOM</p><span class="tag meeting">Meeting</span></div></div>
+          <div class="event-item"><div class="date">Jun 26–28</div><div><p class="desc">DD Org Meeting - Marshfield</p><span class="tag meeting">Meeting</span></div></div>
+          <div class="event-item"><div class="date">Jun 30</div><div><p class="desc">DUE - Form 10057 Food for Families Report</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Jun 30</div><div><p class="desc">DUE - Form 11077 FBN Report</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Jun 30</div><div><p class="desc">DUE - Form 185 Report of Officers Chosen for the Term</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Jun 30</div><div><p class="desc">DUE - Form 2630 Annual Council Roundtable Report</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Jun 30</div><div><p class="desc">DUE - Form 2863 RSVP Report</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Jun 30</div><div><p class="desc">DUE - Form 365 Service Program Personnel Report</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Jun 30</div><div><p class="desc">DUE - Form SP-7 Columbian Award</p><span class="tag due">Due Date</span></div></div>
+          <div class="event-item"><div class="date">Jun 30</div><div><p class="desc">DUE - PKD and CoL donations</p><span class="tag due">Due Date</span></div></div>
+        </div>
+      </article>
+    </section>
+  </div>
+
+  <footer>
+    Built from the State KC Calendar source document.
+  </footer>
+</body>
+</html>
