@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Council History Book Upload</title>
+  <style>
+    :root {
+      --bg1: #0b1f3a;
+      --bg2: #163a63;
+      --card: #ffffff;
+      --accent: #c89b3c;
+      --accent-dark: #9b7424;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        linear-gradient(135deg, rgba(11,31,58,.96), rgba(22,58,99,.92)),
+        radial-gradient(circle at top right, rgba(200,155,60,.25), transparent 32%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 860px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 20px;
+      box-shadow: 0 18px 50px rgba(0,0,0,.22);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.25);
+    }
+
+    .hero {
+      padding: 34px 34px 22px;
+      background: linear-gradient(180deg, #ffffff, #f9fafb);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent-dark);
+      background: rgba(200,155,60,.12);
+      border: 1px solid rgba(200,155,60,.28);
+      border-radius: 999px;
+      padding: 7px 12px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.1;
+      color: #10243f;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.6;
+      max-width: 700px;
+    }
+
+    .content {
+      padding: 30px 34px 34px;
+    }
+
+    .steps {
+      margin: 0;
+      padding-left: 24px;
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    .steps li {
+      margin: 0 0 12px;
+    }
+
+    .panel {
+      margin-top: 26px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #f9fafb;
+    }
+
+    .panel-title {
+      margin: 0 0 10px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #10243f;
+    }
+
+    .link-box {
+      word-break: break-word;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .link-box a {
+      color: #0f4c81;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .actions {
+      margin-top: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      border-radius: 12px;
+      padding: 14px 20px;
+      font-weight: 700;
+      font-size: 16px;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #18212f;
+      box-shadow: 0 8px 18px rgba(200,155,60,.28);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      background: #d4a94e;
+    }
+
+    .btn-secondary {
+      background: #eef2f7;
+      color: #1f2937;
+      border: 1px solid var(--line);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-1px);
+      background: #e6ebf2;
+    }
+
+    .note {
+      margin-top: 18px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    footer {
+      padding: 18px 34px 26px;
+      color: #d1d5db;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 640px) {
+      .hero, .content, footer {
+        padding-left: 22px;
+        padding-right: 22px;
+      }
+
+      .actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <section class="hero">
+        <div class="eyebrow">Council Records Submission</div>
+        <h1>Upload Your 2025/26 Fraternal FIA Council History Book</h1>
+        <p class="subtitle">
+          Please upload the Council History Book to the shared folder using the link below.
+          Make sure it is a PDF file and your final version before submitting.
+        </p>
+      </section>
+
+      <section class="content">
+        <ol class="steps">
+          <li>Click the <strong>Open Upload Folder</strong> button below.</li>
+          <li>In the SharePoint folder, just drag and drop your PDF file from your Computer to the folder.</li>
+        </ol>
+
+          <div class="actions">
+            <a class="btn btn-primary" href="https://wiknightsofcolumbus.sharepoint.com/:f:/s/WebsiteContent/IgBM6s3mMAPFR59RcakrIQAWAW7cnOCmSsmyhq_PUV7ad3M?e=RTXsHX" target="_blank" rel="noopener noreferrer">
+              Open Upload Folder
+            </a>
+          </div>
+
+          <p class="note">
+            Tip: Rename the file clearly before uploading so it can be easily identified in the shared folder.
+          </p>
+        </div>
+      </section>
+
+      <footer>
+        State of Wisconsin Knights of Columbus Council History Book Submission Page
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
