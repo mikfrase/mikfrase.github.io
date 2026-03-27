@@ -572,5 +572,28 @@
       </table>
     </div>
   </div>
+
+<script>
+  const priority = {
+    "not received": 1,
+    "form received": 2
+  };
+
+  const tbody = document.querySelector("table tbody");
+  const rows = Array.from(tbody.querySelectorAll("tr"));
+
+  rows.sort((a, b) => {
+    const textA = a.innerText.toLowerCase();
+    const textB = b.innerText.toLowerCase();
+
+    const valA = textA.includes("not received") ? "not received" : "form received";
+    const valB = textB.includes("not received") ? "not received" : "form received";
+
+    return priority[valA] - priority[valB];
+  });
+
+  rows.forEach(row => tbody.appendChild(row));
+</script>
+
 </body>
 </html>

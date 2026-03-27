@@ -572,5 +572,28 @@
       </table>
     </div>
   </div>
+
+<script>
+  const priority = {
+    "below goal": 1,
+    "achieved": 2
+  };
+
+  const tbody = document.querySelector("table tbody");
+  const rows = Array.from(tbody.querySelectorAll("tr"));
+
+  rows.sort((a, b) => {
+    const textA = (a.cells[4]?.innerText || "").toLowerCase().trim();
+    const textB = (b.cells[4]?.innerText || "").toLowerCase().trim();
+
+    const valA = textA.includes("below") ? "below goal" : (textA.includes("achieved") ? "achieved" : "zzz");
+    const valB = textB.includes("below") ? "below goal" : (textB.includes("achieved") ? "achieved" : "zzz");
+
+    return (priority[valA] || 99) - (priority[valB] || 99);
+  });
+
+  rows.forEach(row => tbody.appendChild(row));
+</script>
+
 </body>
 </html>

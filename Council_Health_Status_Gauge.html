@@ -575,5 +575,25 @@
       </table>
     </div>
   </div>
+
+<script>
+  const priority = {
+    "At Risk": 1,
+    "Functioning": 2,
+    "Baseline": 3
+  };
+
+  const tbody = document.querySelector("table tbody");
+  const rows = Array.from(tbody.querySelectorAll("tr"));
+
+  rows.sort((a, b) => {
+    const valA = a.cells[3].innerText.trim();
+    const valB = b.cells[3].innerText.trim();
+    return (priority[valA] || 99) - (priority[valB] || 99);
+  });
+
+  rows.forEach(row => tbody.appendChild(row));
+</script>
+
 </body>
 </html>
